@@ -1,7 +1,7 @@
 # ZuriStack
 A clone of stackOverflow
 
-#setup
+- setup
 
 -create  a virtual environment
 -install django and other packages
