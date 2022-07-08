@@ -9,4 +9,4 @@ A clone of stackOverflow
 -store secret key/config keys in env variable
 -create apps(accounts,questions, common)
 - configure templates and static folder
-- push to github
+-push to github
