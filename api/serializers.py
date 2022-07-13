@@ -7,7 +7,7 @@ UserModel = get_user_model()
 
 class UserInputSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
-        write_only=True, require=True, validators=[validate_password]
+        write_only=True, required=True, validators=[validate_password]
     )
     password2 = serializers.CharField(write_only=True)
 
@@ -22,7 +22,7 @@ class UserInputSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if attrs["password"] != attrs["password2"]:
             raise serializers.ValidationError(
-                {"password": "Password fields must match"}
+                {"password": "Password fields must match!"}
             )
         return super().validate(attrs)
 

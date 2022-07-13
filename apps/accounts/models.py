@@ -15,6 +15,7 @@ class CustomUser(AbstractUser):
     slug = models.SlugField(blank=True, unique=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+    objects = CustomUserManager()
 
     class Meta:
         verbose_name = "User"
@@ -24,14 +25,14 @@ class CustomUser(AbstractUser):
         return self.email
 
     # create a default slug/username for users if blank
-    def get_random_slug(self):
+
+    def gen_random_slug(self):
         random_slug = slugify(
-            self.first_name + self.last_name + utils.generate_random_id
+            self.first_name + self.last_name + utils.generate_random_id()
         )
-        return random_slug
         while CustomUser.objects.filter(slug=random_slug).exists():
             random_slug = slugify(
-                self.first_name + self.last_name + utils.generate_random_id
+                self.first_name + self.last_name + utils.generate_random_id()
             )
         return random_slug
 

@@ -8,8 +8,6 @@ from .permissions import IsCreatorOrAdminReadOnly
 UserModel = get_user_model()
 
 # Create your views here.
-
-
 class UserViewSet(viewsets.ModelViewSet):
     queryset = UserModel.objects.all()
     default_serializer_class = serializers.UserOutputSerializer

@@ -4,7 +4,6 @@ from rest_framework import permissions
 class IsCreatorOrAdminReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         edit_methods = ("PUT", "PATCH")
-
         # if its safe method (GET; HEAD; OPTION) allow
         if request.method in permissions.SAFE_METHODS:
             return True

@@ -1,5 +1,3 @@
-from urllib import response
-from django.dispatch import receiver
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from rest_framework.test import APITestCase, force_authenticate
@@ -12,8 +10,7 @@ UserModel = get_user_model()
 
 
 class UserRegisterListTests(APITestCase):
-    classmethod
-
+    @classmethod
     def setUpTestData(cls):
         # create a superuser account
         cls.superuser = UserModel.objects.create_superuser(
@@ -30,11 +27,11 @@ class UserRegisterListTests(APITestCase):
 
         cls.normaluser = UserModel.objects.create_user(
             email="normaluser@email.com",
-            password="superuser",
+            password="normaluser",
         )
         cls.normaluser2 = UserModel.objects.create_user(
             email="normaluser2@email.com",
-            password="superuser",
+            password="normaluser2",
         )
 
     def test_user_registration(self):
@@ -109,7 +106,7 @@ class UserRegisterListTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         self.normaluser.refresh_from_db()
-        self.assertEqual(self.normaluser.slug, "normaluser-slug")
+        self.assertEqual(self.normaluser.slug, "superuser-slug")
 
     def test_user_can_get_token(self):
         get_token_endpoint = reverse("api:get_token")

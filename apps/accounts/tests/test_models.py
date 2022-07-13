@@ -1,4 +1,3 @@
-from click import password_option
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
@@ -12,13 +11,12 @@ class CustomUserManagerTests(TestCase):
         self.assertTrue(user.is_active)
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_superuser)
-
-        with self.assertRaises(TypeError):
-            User.objects.create_user()
         """
         self.assertEqual  # perform comparison like ==
         self.assertEquals # use is
         """
+        with self.assertRaises(TypeError):
+            User.objects.create_user()
 
         with self.assertRaises(TypeError):
             User.objects.create_user(email="")
@@ -45,8 +43,12 @@ class CustomUserModelTests(TestCase):
         self.assertNotEqual(user.slug, user2.slug)
 
         with self.assertRaises(IntegrityError):
-            User.objects.create_user(email="user@email.com", password="foo")
-            User.objects.create_user(email="user2@email.com", password="foo")
+            User.objects.create_user(
+                email="user@email.com", slug="user-slug", password="foo"
+            )
+            User.objects.create_user(
+                email="user2@email.com", slug="user-slug", password="foo"
+            )
 
     def test__str__(self):
         User = get_user_model()
@@ -60,5 +62,7 @@ class CustomUserModelTests(TestCase):
 
     def test_user_slug_is_not_overwritten(self):
         User = get_user_model()
-        user = User.objects.create_user(email="user@email.com", password="")
+        user = User.objects.create_user(
+            email="user@email.com", password="foo", slug="weird-slug"
+        )
         self.assertEqual(user.slug, "weird-slug")

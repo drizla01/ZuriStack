@@ -6,7 +6,6 @@ class CustomUserManager(BaseUserManager):
         """
         Create and save a user with email and password
         """
-
         if not email:
             raise ValueError("Email is a required field")
 
